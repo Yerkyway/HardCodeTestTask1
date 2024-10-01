@@ -64,4 +64,18 @@ public class BookController : ControllerBase
         _context.SaveChanges();
         return Ok(book.ToBookDto());
     }
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete([FromRoute] int id)
+    {
+        var book = _context.Books.FirstOrDefault(x => x.Id == id);
+        if (book == null) 
+        {
+            return NotFound();
+        }
+        _context.Books.Remove(book);
+        _context.SaveChanges();
+        
+        return NoContent();
+    }
 }
