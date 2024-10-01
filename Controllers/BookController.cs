@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OrderServiceApp.Data;
 using OrderServiceApp.Dtos;
 using OrderServiceApp.Mappers;
@@ -17,17 +18,17 @@ public class BookController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetAllBooks()
+    public async Task<IActionResult> GetAllBooks()
     {
-        var books = _context.Books.ToList()
-            .Select(s => s.ToBookDto());
+        var books = await  _context.Books.ToListAsync();
+        var bookDto = books.Select(s => s.ToBookDto());
         return Ok(books);
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetBookById([FromRoute] int id)
+    public async Task<IActionResult> GetBookById([FromRoute] int id)
     {
-        var book = _context.Books.Find(id);
+        var book = await _context.Books.FindAsync(id);
         if (book == null)
         {
             return NotFound();
@@ -38,19 +39,19 @@ public class BookController : ControllerBase
 
 
     [HttpPost]
-    public IActionResult Create([FromBody] CreateBookRequestDto bookDto)
+    public async Task<IActionResult> Create([FromBody] CreateBookRequestDto bookDto)
     {
         var bookModel = bookDto.ToBookFromCreateDto();
-        _context.Books.Add(bookModel);
-        _context.SaveChanges();
+        await _context.Books.AddAsync(bookModel);
+        await _context.SaveChangesAsync();
         
         return CreatedAtAction(nameof(GetBookById), new { id = bookModel.Id }, bookModel.ToBookDto());
     }
 
     [HttpPut("{id}")]
-    public IActionResult Update([FromRoute] int id, [FromBody] UpdateBookRequestDto bookDto)
+    public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateBookRequestDto bookDto)
     {
-        var book = _context.Books.FirstOrDefault(x=>x.Id == id);
+        var book = await _context.Books.FirstOrDefaultAsync(x=>x.Id == id);
         if (book==null)
         {
             return NotFound();
@@ -61,20 +62,20 @@ public class BookController : ControllerBase
         book.Price=bookDto.Price;
         book.YearOfPublication=bookDto.YearOfPublication;
 
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
         return Ok(book.ToBookDto());
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete([FromRoute] int id)
+    public async Task<IActionResult> Delete([FromRoute] int id)
     {
-        var book = _context.Books.FirstOrDefault(x => x.Id == id);
+        var book = await _context.Books.FirstOrDefaultAsync(x => x.Id == id);
         if (book == null) 
         {
             return NotFound();
         }
         _context.Books.Remove(book);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
         
         return NoContent();
     }
