@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OrderServiceApp.Data;
+using OrderServiceApp.Dtos;
 using OrderServiceApp.Mappers;
 
 namespace OrderServiceApp.Controllers;
@@ -33,6 +34,17 @@ public class BookController : ControllerBase
         }
 
         return Ok(book.ToBookDto());
+    }
+
+
+    [HttpPost]
+    public IActionResult Create([FromBody] CreateBookRequestDto bookDto)
+    {
+        var bookModel = bookDto.ToBookFromCreateDto();
+        _context.Books.Add(bookModel);
+        _context.SaveChanges();
+        
+        return CreatedAtAction(nameof(GetBookById), new { id = bookModel.Id }, bookModel.ToBookDto());
     }
     
     
