@@ -133,3 +133,4 @@ C:\Users\77764\RiderProjects\OrderServiceApp\OrderServiceApp\obj\Debug\net8.0\re
 C:\Users\77764\RiderProjects\OrderServiceApp\OrderServiceApp\obj\Debug\net8.0\OrderServiceApp.pdb
 C:\Users\77764\RiderProjects\OrderServiceApp\OrderServiceApp\obj\Debug\net8.0\OrderServiceApp.genruntimeconfig.cache
 C:\Users\77764\RiderProjects\OrderServiceApp\OrderServiceApp\obj\Debug\net8.0\ref\OrderServiceApp.dll
+C:\Users\77764\RiderProjects\OrderServiceApp\OrderServiceApp\obj\Debug\net8.0\OrderServiceApp.sourcelink.json
