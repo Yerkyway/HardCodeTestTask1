@@ -46,6 +46,22 @@ public class BookController : ControllerBase
         
         return CreatedAtAction(nameof(GetBookById), new { id = bookModel.Id }, bookModel.ToBookDto());
     }
-    
-    
+
+    [HttpPut("{id}")]
+    public IActionResult Update([FromRoute] int id, [FromBody] UpdateBookRequestDto bookDto)
+    {
+        var book = _context.Books.FirstOrDefault(x=>x.Id == id);
+        if (book==null)
+        {
+            return NotFound();
+        }
+        book.BookName = bookDto.BookName;
+        book.Author = bookDto.Author;
+        book.Publisher=bookDto.Publisher;
+        book.Price=bookDto.Price;
+        book.YearOfPublication=bookDto.YearOfPublication;
+
+        _context.SaveChanges();
+        return Ok(book.ToBookDto());
+    }
 }
