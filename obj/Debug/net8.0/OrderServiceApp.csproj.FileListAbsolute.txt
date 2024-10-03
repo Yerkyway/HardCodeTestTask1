@@ -134,3 +134,5 @@ C:\Users\77764\RiderProjects\OrderServiceApp\OrderServiceApp\obj\Debug\net8.0\Or
 C:\Users\77764\RiderProjects\OrderServiceApp\OrderServiceApp\obj\Debug\net8.0\OrderServiceApp.genruntimeconfig.cache
 C:\Users\77764\RiderProjects\OrderServiceApp\OrderServiceApp\obj\Debug\net8.0\ref\OrderServiceApp.dll
 C:\Users\77764\RiderProjects\OrderServiceApp\OrderServiceApp\obj\Debug\net8.0\OrderServiceApp.sourcelink.json
+C:\Users\77764\RiderProjects\OrderServiceApp\OrderServiceApp\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\77764\RiderProjects\OrderServiceApp\OrderServiceApp\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
