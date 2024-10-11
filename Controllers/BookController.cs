@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OrderServiceApp.Data;
@@ -7,7 +8,7 @@ using OrderServiceApp.Models;
 
 namespace OrderServiceApp.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/book")]
 [ApiController]
 public class BookController : ControllerBase
 {
@@ -23,8 +24,9 @@ public class BookController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllBooks()
     {
-        var books = await  _context.Books.ToListAsync();
-        var bookDto = books.Select(s => _mapper.Map<BookDto>(s));
+        var books = await _context.Books
+            .ProjectTo<BookDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
         return Ok(books);
     }
 

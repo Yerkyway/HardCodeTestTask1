@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using OrderServiceApp;
 using OrderServiceApp.Data;
 
@@ -8,7 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("api", new OpenApiInfo{ Title = "OrderServiceApi", Version = "v1" });
+});
 builder.Services.AddAutoMapper(typeof(BookProfile).Assembly);
 
 builder.Services.AddDbContext<ApplicationDBContext>(options =>
@@ -19,11 +23,11 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    c.SwaggerEndpoint("/swagger/api/swagger.json", "OrderServiceApi");
+});
 
 app.UseHttpsRedirection();
 app.UseRouting();
